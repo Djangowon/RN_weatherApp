@@ -9,8 +9,19 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { API_KEY } from "./env";
+import { Fontisto } from "@expo/vector-icons";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
+const icons = {
+  Clouds: "cloudy",
+  Clear: "day-sunny",
+  Rain: "rain",
+  Snow: "snow",
+  Drizzle: "rains",
+  Thunderstorm: "lightning",
+  Atmosphere: "cloudy-gusts",
+};
 
 export default function App() {
   const [city, setCity] = useState("Loading...");
@@ -63,9 +74,24 @@ export default function App() {
         ) : (
           days.map((day, index) => (
             <View key={index} style={styles.day}>
-              <Text style={styles.temp}>
-                {parseFloat(day.temp.day).toFixed(1)}
-              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.temp}>
+                  {parseFloat(day.temp.day).toFixed(1)}
+                </Text>
+                <Fontisto
+                  name={icons[day.weather[0].main]}
+                  size={68}
+                  color="white"
+                />
+              </View>
+
               <Text style={styles.description}>{day.weather[0].main}</Text>
               <Text style={styles.tinyText}>{day.weather[0].description}</Text>
             </View>
@@ -90,24 +116,28 @@ const styles = StyleSheet.create({
   cityName: {
     fontSize: 65,
     fontWeight: "700",
+    color: "white",
   },
   weather: {
     // backgroundColor: "#bbdefb",
   },
   day: {
     width: SCREEN_WIDTH,
-    alignItems: "center",
+    paddingHorizontal: 24,
   },
   temp: {
     marginTop: 50,
     fontWeight: "600",
-    fontSize: 170,
+    fontSize: 120,
+    color: "white",
   },
   description: {
-    marginTop: -30,
+    marginTop: -15,
     fontSize: 60,
+    color: "white",
   },
   tinyText: {
     fontSize: 20,
+    color: "white",
   },
 });
